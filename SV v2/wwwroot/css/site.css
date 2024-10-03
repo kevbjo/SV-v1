@@ -1,0 +1,169 @@
+/* wwwroot/css/site.css */
+
+body {
+    background-color: black;
+    color: yellow;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    color: yellow;
+    font-size: 44px;
+    padding: 20px; /* Minskat padding för att placera rubriken närmare toppen */
+    z-index: -1;
+}
+
+.main-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 50px; /* Justera padding-top om nödvändigt */
+    display: flex; /* Gör main-content till en flex-behållare */
+    flex-direction: column; /* Riktning på flexbox */
+    align-items: center; /* Centrera innehållet horisontellt */
+    justify-content: flex-start; /* Justera till toppen */
+}
+
+/* Justering av menybehållarens avstånd från rubriken */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0; /* Centrerar flipcard med lite utrymme ovan och under */
+    padding-top: 10px; /* Exakt 20px avstånd från "SKYDDSVAKTEN" */
+}
+
+/* Justering av knappstorlek */
+.menu-button {
+    background-color: #007bff; /* Blå färg */
+    color: white;
+    border: none;
+    padding: 10px 30px; /* Mindre padding för mindre knappar */
+    margin: 10px 0; /* Lite mindre mellanrum mellan knapparna */
+    border-radius: 15px; /* Rundade hörn */
+    font-size: 16px; /* Mindre textstorlek */
+    cursor: pointer;
+    width: 150px; /* Mindre bredd på knapparna */
+    text-align: center;
+    text-decoration: none; /* Tar bort understrykning */
+    text-transform: uppercase; /* Gör texten till versaler */
+    transition: background-color 0.3s; /* Smidig övergång vid hover */
+}
+
+    /* Effekt vid hover */
+    .menu-button:hover {
+        background-color: #0056b3; /* Mörkare blå färg vid hover */
+    }
+
+/* Säkerställ att alla <a> element inte har understrykning */
+a {
+    text-decoration: none; /* Tar bort understrykning från alla länkar */
+}
+
+/* Stilar för flipcard */
+.flipcard {
+    width: 200px; /* Bredd på flipcard */
+    height: 280px; /* Höjd på flipcard */
+    perspective: 1000px; /* För att få en 3D-effekt */
+    margin: 20px 0; /* Öka marginalen något */
+    position: relative; /* Positionera relativt för innehållet */
+    display: flex; /* Gör flipcard till en flex-behållare */
+    align-items: center; /* Centrera innehållet vertikalt */
+    justify-content: center; /* Centrera innehållet horisontellt */
+    padding-top: 5px; /* Extra utrymme ovanför */
+    z-index: 1; /* Se till att flipkorten har ett högre z-index */
+}
+
+.flipcard-front,
+.flipcard-back {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Låt texten placeras i kolumnform */
+    align-items: center; /* Centrera text vertikalt */
+    justify-content: center; /* Centrera text horisontellt */
+    padding: 20px; /* Padding för att ge utrymme runt texten */
+    backface-visibility: hidden; /* Döljer baksidan när framsidan visas */
+    position: absolute; /* Låt baksidan ligga ovanpå framsidan */
+    border-radius: 10px; /* Rundade hörn */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Skugga för att ge djup */
+    overflow: hidden; /* Dölja överskjutande text */
+    text-align: center; /* Centrera texten */
+}
+
+/* Specifik stil för framsidan */
+.flipcard-front {
+    background-color: white; /* Vit bakgrund för framsidan */
+}
+
+/* Specifik stil för baksidan */
+.flipcard-back {
+    background-color: #d0f0c0; /* Svagt ljusgrön bakgrund för baksidan */
+    transform: rotateY(180deg); /* Vänd baksidan */
+}
+
+/* Styla texten i kortet */
+#flashcard-question,
+#flashcard-answer {
+    font-size: 1rem; /* Grundstorlek för text */
+    color: black; /* Svart textfärg */
+    line-height: 1.5; /* Öka radavståndet för bättre läsbarhet */
+    overflow-wrap: break-word; /* Bryt långa ord så att de stannar inom rutan */
+    white-space: normal; /* Gör så att texten bryts normalt */
+    max-height: 100px; /* Maximal höjd för textområdet, justera vid behov */
+    width: 100%; /* Se till att texten täcker hela bredden */
+    margin: 0; /* Ingen marginal */
+    display: flex; /* Gör texten till en flex-behållare */
+    flex-direction: column; /* Texten kommer att placeras i kolumnform */
+    justify-content: center; /* Centrera texten vertikalt */
+}
+
+@media (max-width: 500px) {
+    .flipcard {
+        width: 100%; /* Full bredd på små skärmar */
+        height: auto; /* Automatisk höjd */
+    }
+}
+
+/* Anpassa textstorleken om den är för stor */
+@media (max-width: 500px) {
+    #flashcard-question,
+    #flashcard-answer {
+        font-size: 1rem; /* Minska textstorlek för mindre skärmar */
+    }
+}
+
+/* Rotera flipcard när den är vänd */
+.flipcard.flipped .flipcard-front {
+    transform: rotateY(180deg); /* Vänd framsidan */
+}
+
+.flipcard.flipped .flipcard-back {
+    transform: rotateY(0deg); /* Visa baksidan */
+}
+
+.button-container {
+    display: flex; /* Använd flexbox för att ordna knapparna */
+    flex-direction: column; /* Placera knapparna i en kolumn */
+    align-items: center; /* Centrera knapparna horisontellt */
+    margin-top: 10px; /* Avstånd mellan flipkortet och knapparna */
+}
+
+    .button-container .menu-button {
+        width: 200px; /* Gör knapparna lika breda som flipkortet */
+        margin: 5px 0; /* Avstånd mellan knapparna */
+        text-align: center; /* Centrera texten i knappen */
+    }

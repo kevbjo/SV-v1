@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SV_v2.Models.Flashcard>
+
+@{
+    ViewData["Title"] = "Flashcards";
+    Layout = "_Layout";
+}
+
+<div class="main-content">
+    <div class="flipcard" id="flipcard">
+        <div class="flipcard-front">
+            <p id="flashcard-question">Laddar fråga...</p>
+        </div>
+        <div class="flipcard-back">
+            <p id="flashcard-answer">Laddar svar...</p>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button class="menu-button" id="next-card">NÄSTA KORT</button>
+        <button class="menu-button" id="back-button">TILLBAKA</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const flipcard = document.getElementById('flipcard');
+        const nextCardButton = document.getElementById('next-card');
+        const backButton = document.getElementById('back-button');
+
+        // Funktion för att hämta ett slumpmässigt kort från servern
+        function fetchRandomCard() {
+            fetch('/Flashcard/GetRandomCard')
+                .then(response => response.json())
+                .then(data => {
+                    // Vänta tills kortet har roterat tillbaka innan vi visar nytt kort
+                    setTimeout(() => {
+                        // Uppdatera fråga och svar
+                        document.getElementById('flashcard-question').innerText = data.question;
+                        document.getElementById('flashcard-answer').innerText = data.answer;
+                    }, 100); // Vänta tills animeringen är klar
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Ladda ett första slumpmässigt kort när sidan laddas
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchRandomCard();
+        });
+
+        // När användaren klickar på "NÄSTA KORT"
+        nextCardButton.addEventListener('click', function() {
+            // Om kortet är vänt, rotera det först tillbaka till framsidan
+            if (flipcard.classList.contains('flipped')) {
+                flipcard.classList.remove('flipped');
+                // Vänta tills animeringen är klar innan vi hämtar ett nytt kort
+                setTimeout(() => {
+                    fetchRandomCard(); // Hämta nytt slumpmässigt kort efter roteringen
+                }, 100); // Vänta tills animeringen är klar
+            } else {
+                fetchRandomCard(); // Hämta ett nytt kort direkt om kortet inte är vänt
+            }
+        });
+
+        // Tillbaka-knapp för att navigera tillbaka till huvudmenyn
+        backButton.addEventListener('click', function() {
+            window.location.href = '/Home'; // Gå tillbaka till huvudmenyn
+        });
+
+        // Logik för att vända kortet
+        flipcard.addEventListener('click', function() {
+            // Toggla klassen 'flipped' för att vända kortet
+            flipcard.classList.toggle('flipped'); // Vänd kortet
+        });
+    </script>
+}
